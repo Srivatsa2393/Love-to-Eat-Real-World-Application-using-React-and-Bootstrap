@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
+import Ingredients from './Ingredients';
 
 class Submit extends React.Component{
 
   constructor(props){
     super(props);
 
-    this.satte={};
+    this.state={};
 
     this.submitRecipe = this.submitRecipe.bind(this);
   }
@@ -13,6 +14,8 @@ class Submit extends React.Component{
   submitRecipe(){
     console.log('button clicked');
     this.props.history.push('/');
+    console.log(this.name.value);
+    console.log(this.description.value);
   }
 
   render(){
@@ -22,27 +25,28 @@ class Submit extends React.Component{
           <div className="col-xs-12 col-sm-12">
             <h1>Submit</h1>
               <form>
-                <div class="form-group">
-                  <label for="name">Email address</label>
-                  <input type="text" className="form-control" id="name" placeholder="Enter the name of the recipe" />
+                <div className="form-group">
+                  <label htmlFor="name">Email address</label>
+                  <input type="text"
+                    ref={(input) => {this.name = input;}}
+                    className="form-control"
+                    id="name"
+                    placeholder="Enter the name of the recipe" />
                 </div>
                 <div className="form-group">
-                  <label for="description">Description</label>
-                  <textarea className="form-control" id="description" placeholder="Enter a brief description" />
+                  <label htmlFor="description">Description</label>
+                  <textarea
+                    className="form-control"
+                    id="description"
+                    ref={(input) => {this.description = input;}}
+                    placeholder="Enter a brief description" />
                 </div>
-                <div className="form-inline form-group">
-                  <label for="quantity">Quantity</label>
-                  <input type="text" className="form-control" id="quantity" placeholder="Quantity" />
-
-                  <label for="ingredient">Ingredients</label>
-                  <input type="text" className="form-control" id="ingredient" placeholder="Ingredients" />
-                  <button type="submit" className="btn btn-info">Add</button>
-                </div>
-                <button type="submit" className="btn btn-default">Submit</button>
+                <Ingredients />
+                
+                <button type="button" className="btn btn-default" onClick={this.submitRecipe}>Submit a Recipe</button>
               </form>
           </div>
         </div>
-        <button onClick={this.submitRecipe}>Submit a Recipe</button>
       </div>
     );
   }

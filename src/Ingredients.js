@@ -12,6 +12,10 @@ class Ingredients extends React.Component{
   addIngredients(){
     console.log('Ingredient clicked');
     console.log(this.quantity.value, this.ingredient.value);
+    this.props.addIngredient(this.quantity.value, this.ingredient.value);
+    //set the quantity and ingredient to empty string after every update
+    this.quantity.value = "";
+    this.ingredient.value = "";
   }
 
   render(){

@@ -1,12 +1,19 @@
 import React, { Component } from 'react';
 import Ingredients from './Ingredients';
+import IngredientList from './IngredientList';
 
 class Submit extends React.Component{
 
   constructor(props){
     super(props);
 
-    this.state={};
+    this.state={
+      newReceipe: {
+        name: "New Receipe",
+        description: "Description",
+        ingredients: []
+      }
+    };
 
     this.submitRecipe = this.submitRecipe.bind(this);
   }
@@ -16,6 +23,22 @@ class Submit extends React.Component{
     this.props.history.push('/');
     console.log(this.name.value);
     console.log(this.description.value);
+    let newReceipe = this.state.newReceipe;
+
+    newReceipe.name = this.name.value;
+    newReceipe.description = this.description.value;
+
+    this.setState({newReceipe});
+    console.log(newReceipe);
+  }
+
+  addIngredient(quantity, ingredient){
+    console.log("Add Ingredients in submit", quantity, ingredient);
+    //get the new Receipe
+    let newReceipe = this.state.newReceipe;
+    newReceipe.ingredients.push({quantity: quantity, ingredient: ingredient});
+    this.setState({newReceipe: newReceipe});
+    console.log(newReceipe);
   }
 
   render(){
@@ -41,8 +64,9 @@ class Submit extends React.Component{
                     ref={(input) => {this.description = input;}}
                     placeholder="Enter a brief description" />
                 </div>
-                <Ingredients />
-                
+                <IngredientList receipe={this.state.newReceipe}/>
+                <Ingredients addIngredient={(quantity, ingredient) => {this.addIngredient(quantity, ingredient)}} />
+
                 <button type="button" className="btn btn-default" onClick={this.submitRecipe}>Submit a Recipe</button>
               </form>
           </div>

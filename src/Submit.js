@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Ingredients from './Ingredients';
 import IngredientList from './IngredientList';
+import createBrowserHistory from 'history/createBrowserHistory';
 
 class Submit extends React.Component{
 
@@ -8,6 +9,7 @@ class Submit extends React.Component{
     super(props);
 
     this.state={
+      receipes: JSON.parse(localStorage.getItem('receipes')) || [],
       newReceipe: {
         name: "New Receipe",
         description: "Description",
@@ -29,7 +31,17 @@ class Submit extends React.Component{
     newReceipe.description = this.description.value;
 
     this.setState({newReceipe});
-    console.log(newReceipe);
+
+    let receipes = this.state.receipes;
+    receipes.push(newReceipe);
+
+    this.setState({receipes});
+    //local storage
+    localStorage.setItem('receipes',JSON.stringify(receipes));
+    createBrowserHistory.push('/');
+
+    //console.log(newReceipe);
+    console.log(receipes);
   }
 
   addIngredient(quantity, ingredient){
